@@ -1,15 +1,13 @@
-package adapters;
+package com.example.shoappinglist.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.os.Bundle;
-import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.shoappinglist.R;
-import models.Product;
+import com.example.shoappinglist.models.Product;
 
 import java.util.List;
 
@@ -48,7 +46,7 @@ public class ProductAdapter extends BaseAdapter {
         else v=view;
 
         TextView title=(TextView) v.findViewById(R.id.desc_tb);
-        title.setText(products.get(i).getDescription());
+        title.setText(products.get(i).getNote());
 
         return v;
     }

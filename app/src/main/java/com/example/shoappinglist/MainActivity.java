@@ -1,22 +1,25 @@
 package com.example.shoappinglist;
 
-import adapters.ProductAdapter;
+import android.util.Log;
+import com.example.shoappinglist.adapters.ProductAdapter;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import com.example.shoappinglist.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import models.Product;
+import com.example.shoappinglist.models.Product;
+import com.example.shoappinglist.services.IProductService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
@@ -34,12 +37,38 @@ public class MainActivity extends AppCompatActivity {
 
         lvItems = (ListView) findViewById(R.id.lvProduct);
         items = new ArrayList<Product>();
-        items.add(new Product("Huevitos, 4,0,600"));
-        items.add(new Product("Arepa, 1, 0, 2000"));
-
         productAdapter = new ProductAdapter(this, R.layout.product_element,items);
 
-        lvItems.setAdapter(productAdapter);
+        IProductService productService = ShoappingListApplication.getRetrofitInstance().create(IProductService.class);
+
+        // Make the GET request
+        Call<List<Product>> call = productService.getProducts();
+        call.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful()) {
+                    List<Product> products = response.body();
+                    for (Product product : products) {
+                        items.add(product);
+
+                    }
+
+                    items.add(new Product(5L, "Arepa", "EEE", 2500));
+                    lvItems.setAdapter(productAdapter);
+
+                } else {
+                    // Handle the error
+                    Log.e("API Error", "Request failed with code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                // Handle network or other errors
+                Log.e("API Error", "Request failed: " + t.getMessage());
+            }
+        });
+
 
     }
 
