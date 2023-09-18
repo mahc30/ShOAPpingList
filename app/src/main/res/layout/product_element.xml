@@ -16,7 +16,8 @@
                 android:text="Delete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/delete_btn" android:background="#E96496"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:onClick="deleteProduct"/>
         <ImageView
                 android:layout_width="128dp"
                 android:layout_height="128dp" tools:srcCompat="@tools:sample/avatars" android:id="@+id/imgv"

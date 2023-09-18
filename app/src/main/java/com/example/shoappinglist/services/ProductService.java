@@ -10,4 +10,19 @@ public class ProductService implements IProductService{
     public Call<List<Product>> getProducts() {
         return null;
     }
+
+    @Override
+    public Call<Product> createProduct(Product product) {
+        return null;
+    }
+
+    @Override
+    public Call<Product> updateProduct(long productId, Product product) {
+        return null;
+    }
+
+    @Override
+    public Call<Void> deleteProduct(long productId) {
+        return null;
+    }
 }

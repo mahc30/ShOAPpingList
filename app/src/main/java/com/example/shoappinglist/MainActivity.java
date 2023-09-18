@@ -1,6 +1,8 @@
 package com.example.shoappinglist;
 
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import com.example.shoappinglist.adapters.ProductAdapter;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Product> items;
     private ArrayAdapter<String> itemsAdapter;
     private ListView lvItems;
+    private final IProductService productService = ShoappingListApplication.getRetrofitInstance().create(IProductService.class);
 
     private ProductAdapter productAdapter;
     @Override
@@ -39,9 +42,6 @@ public class MainActivity extends AppCompatActivity {
         items = new ArrayList<Product>();
         productAdapter = new ProductAdapter(this, R.layout.product_element,items);
 
-        IProductService productService = ShoappingListApplication.getRetrofitInstance().create(IProductService.class);
-
-        // Make the GET request
         Call<List<Product>> call = productService.getProducts();
         call.enqueue(new Callback<List<Product>>() {
             @Override
@@ -50,10 +50,8 @@ public class MainActivity extends AppCompatActivity {
                     List<Product> products = response.body();
                     for (Product product : products) {
                         items.add(product);
-
                     }
 
-                    items.add(new Product(5L, "Arepa", "EEE", 2500));
                     lvItems.setAdapter(productAdapter);
 
                 } else {
@@ -93,4 +91,38 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void deleteProduct(View view) {
+        Button button = (Button)view;
+        Long id = Long.parseLong(button.getText().toString().split(" ")[2]);
+        Call<Void> call = productService.deleteProduct(id);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    for(int i = 0; i < items.size(); i++){
+                        Product p = items.get(i);
+                        if(p.getId() == id){
+                            items.remove(i);
+                            lvItems.setAdapter(productAdapter);
+                            break;
+                        }
+                    }
+                } else {
+                    // Handle the error
+                    Log.e("API Error", "Request failed with code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                // Handle network or other errors
+                Log.e("API Error", "Request failed: " + t.getMessage());
+            }
+        });
+
+    }
+
+
 }

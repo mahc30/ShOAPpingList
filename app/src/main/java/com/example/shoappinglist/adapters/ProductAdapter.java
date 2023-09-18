@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 import com.example.shoappinglist.R;
 import com.example.shoappinglist.models.Product;
@@ -45,9 +46,15 @@ public class ProductAdapter extends BaseAdapter {
         }
         else v=view;
 
-        TextView title=(TextView) v.findViewById(R.id.desc_tb);
-        title.setText(products.get(i).getNote());
+        TextView title=(TextView) v.findViewById(R.id.name_tb);
+        TextView note=(TextView) v.findViewById(R.id.note_tb);
+        TextView price=(TextView) v.findViewById(R.id.price_tb);
+        title.setText(products.get(i).getName());
+        note.setText(products.get(i).getNote());
+        price.setText(String.format("%d",products.get(i).getPrice()));
 
+        Button deleteBtn = (Button) v.findViewById((R.id.delete_btn));
+        deleteBtn.setText("Delete Product " + products.get(i).getId());
         return v;
     }
 }
