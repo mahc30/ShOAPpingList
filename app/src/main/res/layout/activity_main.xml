@@ -10,12 +10,14 @@
     <include layout="@layout/content_main" android:layout_height="226dp" app:layout_anchorGravity="center"
              android:id="@+id/include" app:layout_anchor="@+id/include"/>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/createProductBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="@dimen/fab_margin"
             android:layout_marginBottom="16dp"
-            app:srcCompat="@android:drawable/ic_menu_add" app:backgroundTint="#E94196"/>
+            app:srcCompat="@android:drawable/ic_menu_add" app:backgroundTint="#E94196"
+            android:onClick="createProduct"/>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

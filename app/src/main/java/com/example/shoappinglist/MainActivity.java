@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import com.example.shoappinglist.models.Product;
 import com.example.shoappinglist.services.IProductService;
+import com.example.shoappinglist.services.SOAP.ProductClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Product> items;
     private ArrayAdapter<String> itemsAdapter;
     private ListView lvItems;
+    private final ProductClient productSoapClient = new ProductClient();
+
     private final IProductService productService = ShoappingListApplication.getRetrofitInstance().create(IProductService.class);
 
     private ProductAdapter productAdapter;
@@ -122,7 +125,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
-
+    public void createProduct(View view) {
+        System.out.println(view.getId());
+        Product product = new Product(69L, "Product", "OwO", 420);
+        productSoapClient.createProduct(product);
+        items.add(product);
+        lvItems.setAdapter(productAdapter);
+    }
 }
