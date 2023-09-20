@@ -7,17 +7,27 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-    <include layout="@layout/content_main" android:layout_height="226dp" app:layout_anchorGravity="center"
-             android:id="@+id/include" app:layout_anchor="@+id/include"/>
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/createProductBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:layout_marginBottom="16dp"
-            app:srcCompat="@android:drawable/ic_menu_add" app:backgroundTint="#E94196"
-            android:onClick="createProduct"/>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <include layout="@layout/content_main" android:layout_height="387dp"
+                     android:id="@+id/includeProduct"/>
+        </LinearLayout>
+        <include android:layout_width="match_parent" android:layout_height="243dp"
+                 layout="@layout/add_product_form"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/createProductBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="@dimen/fab_margin"
+                android:layout_marginBottom="16dp"
+                app:srcCompat="@android:drawable/ic_menu_add" app:backgroundTint="#E94196"
+                android:onClick="createProduct"/>
+    </LinearLayout>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

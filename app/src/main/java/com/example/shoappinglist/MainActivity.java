@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import com.example.shoappinglist.models.Product;
 import com.example.shoappinglist.services.IProductService;
 import com.example.shoappinglist.services.SOAP.ProductClient;
+import com.google.android.material.textfield.TextInputEditText;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,9 +42,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        lvItems = (ListView) findViewById(R.id.lvProduct);
         items = new ArrayList<Product>();
         productAdapter = new ProductAdapter(this, R.layout.product_element,items);
+        lvItems = (ListView) findViewById(R.id.lvProduct);
+
 
         Call<List<Product>> call = productService.getProducts();
         call.enqueue(new Callback<List<Product>>() {
@@ -72,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -129,8 +132,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createProduct(View view) {
-        System.out.println(view.getId());
-        Product product = new Product(69L, "Product", "OwO", 420);
+
+        TextInputEditText inName = findViewById(R.id.input_name);
+        TextInputEditText inNote = findViewById(R.id.input_note);
+        TextInputEditText inPrice = findViewById(R.id.input_price);
+        Product product = new Product(69L, inName.getText().toString(), inNote.getText().toString(), Integer.parseInt(inPrice.getText().toString()));
         productSoapClient.createProduct(product);
         items.add(product);
         lvItems.setAdapter(productAdapter);
