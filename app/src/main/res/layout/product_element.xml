@@ -21,7 +21,9 @@
         <Button
                 android:text="Edit"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/edit_btn" android:background="#E96496"/>
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_btn" android:background="#E96496"
+                android:onClick="editProduct"/>
         <TextView
                 android:text="NameTextView"
                 android:layout_width="match_parent"
@@ -31,8 +33,8 @@
         <TextView
                 android:text="NoteTextView"
                 android:layout_width="match_parent"
-                android:layout_height="101dp" android:id="@+id/note_tb" android:textColor="#000000"
-                android:textSize="20sp"/>
+                android:layout_height="100dp" android:id="@+id/note_tb" android:textColor="#000000"
+                android:textSize="24sp"/>
         <TextView
                 android:text="PriceTextView"
                 android:layout_width="match_parent"

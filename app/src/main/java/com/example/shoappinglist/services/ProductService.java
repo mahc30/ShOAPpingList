@@ -17,7 +17,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public Call<Product> updateProduct(long productId, Product product) {
+    public Call<Void> updateProduct(Product product) {
         return null;
     }
 

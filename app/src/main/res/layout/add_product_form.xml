@@ -21,6 +21,15 @@
 
             <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Id" android:id="@+id/input_id"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:hint="Name" android:id="@+id/input_name"/>
         </com.google.android.material.textfield.TextInputLayout>

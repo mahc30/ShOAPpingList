@@ -13,10 +13,10 @@
             android:layout_height="match_parent">
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                       android:orientation="vertical">
-            <include layout="@layout/content_main" android:layout_height="387dp"
+            <include layout="@layout/content_main" android:layout_height="match_parent"
                      android:id="@+id/includeProduct"/>
         </LinearLayout>
-        <include android:layout_width="match_parent" android:layout_height="243dp"
+        <include android:layout_width="match_parent" android:layout_height="383dp"
                  layout="@layout/add_product_form"/>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/createProductBtn"
@@ -26,7 +26,7 @@
                 android:layout_marginEnd="@dimen/fab_margin"
                 android:layout_marginBottom="16dp"
                 app:srcCompat="@android:drawable/ic_menu_add" app:backgroundTint="#E94196"
-                android:onClick="createProduct"/>
+                android:onClick="upcreateProduct"/>
     </LinearLayout>
 
 

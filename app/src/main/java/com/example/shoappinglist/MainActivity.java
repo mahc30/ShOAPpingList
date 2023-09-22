@@ -1,12 +1,12 @@
 package com.example.shoappinglist;
 
+import android.app.ActionBar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
+import android.widget.*;
 import com.example.shoappinglist.adapters.ProductAdapter;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.ui.AppBarConfiguration;
 import com.example.shoappinglist.databinding.ActivityMainBinding;
@@ -17,6 +17,7 @@ import com.example.shoappinglist.models.Product;
 import com.example.shoappinglist.services.IProductService;
 import com.example.shoappinglist.services.SOAP.ProductClient;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -131,14 +132,51 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void createProduct(View view) {
+    public void upcreateProduct(View view) {
 
+        TextInputEditText inId = findViewById(R.id.input_id);
         TextInputEditText inName = findViewById(R.id.input_name);
         TextInputEditText inNote = findViewById(R.id.input_note);
         TextInputEditText inPrice = findViewById(R.id.input_price);
-        Product product = new Product(69L, inName.getText().toString(), inNote.getText().toString(), Integer.parseInt(inPrice.getText().toString()));
-        productSoapClient.createProduct(product);
-        items.add(product);
+
+        Product product = new Product(-1L, inName.getText().toString(), inNote.getText().toString(), Integer.parseInt(inPrice.getText().toString()));
+
+        if(inId.length() == 0) {
+            productSoapClient.createProduct(product);
+            items.add(product);
+        }
+        else{
+        Long id = Long.parseLong(inId.getText().toString());
+        product.setId(id);
+            Call<Void> call = productService.updateProduct(product);
+
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    if (response.isSuccessful()) {
+
+                        lvItems.setAdapter(productAdapter);
+                    } else {
+                        // Handle the error
+                        Log.e("API Error", "Request failed with code: " + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    // Handle network or other errors
+                    Log.e("API Error", "Request failed: " + t.getMessage());
+                }
+            });
+        }
+
         lvItems.setAdapter(productAdapter);
+    }
+
+       public void editProduct(View view){
+           TextInputEditText inId = findViewById(R.id.input_id);
+           TextInputEditText inName = findViewById(R.id.input_name);
+           TextInputEditText inNote = findViewById(R.id.input_note);
+           TextInputEditText inPrice = findViewById(R.id.input_price);
     }
 }
