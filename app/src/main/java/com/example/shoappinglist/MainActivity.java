@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.shoappinglist.adapters.ProductAdapter;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import com.example.shoappinglist.services.IProductService;
 import com.example.shoappinglist.services.SOAP.ProductClient;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.annotations.JsonAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         productAdapter = new ProductAdapter(this, R.layout.product_element,items);
         lvItems = (ListView) findViewById(R.id.lvProduct);
 
-
         Call<List<Product>> call = productService.getProducts();
         call.enqueue(new Callback<List<Product>>() {
             @Override
@@ -73,6 +74,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        SwipeRefreshLayout srl = findViewById(R.id.swiperefresh);
+        srl.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+
+                        // This method performs the actual data-refresh operation.
+                        // The method calls setRefreshing(false) when it's finished.
+                        recreate();
+                        srl.setRefreshing(false);
+                    }
+                }
+
+        );
 
     }
 
@@ -100,8 +115,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void deleteProduct(View view) {
-        Button button = (Button)view;
-        Long id = Long.parseLong(button.getText().toString().split(" ")[2]);
+        Product product = items.get(Integer.parseInt(view.getTag().toString()));
+        Long id = Long.parseLong(product.getId().toString());
         Call<Void> call = productService.deleteProduct(id);
 
         call.enqueue(new Callback<Void>() {
@@ -168,15 +183,36 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("API Error", "Request failed: " + t.getMessage());
                 }
             });
+
+            inId.setText("");
+            inName.setText("");
+            inNote.setText("");
+            inPrice.setText("");
         }
 
         lvItems.setAdapter(productAdapter);
+        View addForm = findViewById(R.id.FLAddProductSection);
+        addForm.setVisibility(View.GONE);
     }
 
        public void editProduct(View view){
+
+            View addForm = findViewById(R.id.FLAddProductSection);
+            addForm.setVisibility(View.VISIBLE);
+
+           Product product = items.get(Integer.parseInt(view.getTag().toString()));
            TextInputEditText inId = findViewById(R.id.input_id);
            TextInputEditText inName = findViewById(R.id.input_name);
            TextInputEditText inNote = findViewById(R.id.input_note);
            TextInputEditText inPrice = findViewById(R.id.input_price);
+
+           inId.setText(product.getId().toString());
+           inName.setText(product.getName().toString());
+           inNote.setText(product.getNote().toString());
+           inPrice.setText(String.format("%d",product.getPrice()));
     }
+
+
+
+
 }

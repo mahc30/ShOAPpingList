@@ -7,27 +7,39 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/swiperefresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        <LinearLayout android:layout_width="match_parent" android:layout_height="467dp"
                       android:orientation="vertical">
-            <include layout="@layout/content_main" android:layout_height="match_parent"
+            <include layout="@layout/content_main" android:layout_height="503dp"
                      android:id="@+id/includeProduct"/>
         </LinearLayout>
-        <include android:layout_width="match_parent" android:layout_height="383dp"
-                 layout="@layout/add_product_form"/>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/createProductBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_marginEnd="@dimen/fab_margin"
-                android:layout_marginBottom="16dp"
-                app:srcCompat="@android:drawable/ic_menu_add" app:backgroundTint="#E94196"
-                android:onClick="upcreateProduct"/>
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="379dp" tools:visibility="gone" android:id="@+id/FLAddProductSection">
+
+            <include android:layout_width="match_parent" android:layout_height="330dp"
+                     layout="@layout/add_product_form"
+                     android:id="@+id/includeAddProductForm"/>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/createProductBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginEnd="@dimen/fab_margin"
+                    android:layout_marginBottom="16dp"
+                    app:srcCompat="@android:drawable/ic_menu_add" app:backgroundTint="#E94196"
+                    android:onClick="upcreateProduct" android:visibility="visible" android:translationZ="90dp"/>
+        </FrameLayout>
     </LinearLayout>
 
-
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

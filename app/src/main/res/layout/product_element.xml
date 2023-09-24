@@ -12,24 +12,25 @@
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintVertical_bias="0.0" android:id="@+id/linearLayout">
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
                 android:text="Delete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/delete_btn" android:background="#E96496"
                 android:textColor="@color/white"
-                android:onClick="deleteProduct"/>
-        <Button
+                android:onClick="deleteProduct" android:backgroundTint="#E96496" android:textStyle="bold"/>
+        <androidx.appcompat.widget.AppCompatButton
                 android:text="Edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/edit_btn" android:background="#E96496"
-                android:onClick="editProduct"/>
+                android:onClick="editProduct" android:focusable="false" android:backgroundTint="#E96496"
+                android:textColor="@color/white" android:textStyle="bold"/>
+
         <TextView
                 android:text="NameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="50dp" android:id="@+id/name_tb"
-                android:textSize="24sp"/>
-
+                android:textSize="24sp" android:textColor="#000000"/>
         <TextView
                 android:text="NoteTextView"
                 android:layout_width="match_parent"
@@ -39,7 +40,7 @@
                 android:text="PriceTextView"
                 android:layout_width="match_parent"
                 android:layout_height="50dp" android:id="@+id/price_tb"
-                android:textSize="20sp"/>
+                android:textSize="20sp" android:textColor="#000000"/>
 
     </LinearLayout>
 
