@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import com.example.shoappinglist.models.Product;
 import com.example.shoappinglist.services.IProductService;
 import com.example.shoappinglist.services.SOAP.ProductClient;
+import com.example.shoappinglist.services.socket.SocketClient;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.annotations.JsonAdapter;
@@ -24,6 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -195,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
         addForm.setVisibility(View.GONE);
     }
 
-       public void editProduct(View view){
+       public void editProduct(View view) throws IOException {
 
             View addForm = findViewById(R.id.FLAddProductSection);
             addForm.setVisibility(View.VISIBLE);
@@ -210,6 +212,8 @@ public class MainActivity extends AppCompatActivity {
            inName.setText(product.getName().toString());
            inNote.setText(product.getNote().toString());
            inPrice.setText(String.format("%d",product.getPrice()));
+
+           SocketClient client = new SocketClient();
     }
 
 
