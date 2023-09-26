@@ -42,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
     private final IProductService productService = ShoappingListApplication.getRetrofitInstance().create(IProductService.class);
 
     private ProductAdapter productAdapter;
+
+    private SocketClient client;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     lvItems.setAdapter(productAdapter);
-
+                    client = new SocketClient();
                 } else {
                     // Handle the error
                     Log.e("API Error", "Request failed with code: " + response.code());
@@ -156,6 +159,15 @@ public class MainActivity extends AppCompatActivity {
         TextInputEditText inNote = findViewById(R.id.input_note);
         TextInputEditText inPrice = findViewById(R.id.input_price);
 
+        if(inPrice.getText().toString().equals("")){
+            String msg = inName.getText().toString();
+            client.send(msg);
+            inName.setText("");
+            inNote.setText("");
+            inPrice.setText("");
+            return;
+        }
+
         Product product = new Product(-1L, inName.getText().toString(), inNote.getText().toString(), Integer.parseInt(inPrice.getText().toString()));
 
         if(inId.length() == 0) {
@@ -213,10 +225,11 @@ public class MainActivity extends AppCompatActivity {
            inNote.setText(product.getNote().toString());
            inPrice.setText(String.format("%d",product.getPrice()));
 
-           SocketClient client = new SocketClient();
     }
 
-
+    private void sendMessage(String msg){
+        client.send(msg);
+    }
 
 
 }
