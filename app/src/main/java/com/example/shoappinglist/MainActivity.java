@@ -1,9 +1,7 @@
 package com.example.shoappinglist;
 
-import android.app.ActionBar;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.*;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.shoappinglist.adapters.ProductAdapter;
@@ -19,8 +17,6 @@ import com.example.shoappinglist.services.IProductService;
 import com.example.shoappinglist.services.SOAP.ProductClient;
 import com.example.shoappinglist.services.socket.SocketClient;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-import com.google.gson.annotations.JsonAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -148,8 +144,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("API Error", "Request failed: " + t.getMessage());
             }
         });
-
-
     }
 
     public void upcreateProduct(View view) {
@@ -224,12 +218,9 @@ public class MainActivity extends AppCompatActivity {
            inName.setText(product.getName().toString());
            inNote.setText(product.getNote().toString());
            inPrice.setText(String.format("%d",product.getPrice()));
-
     }
 
     private void sendMessage(String msg){
         client.send(msg);
     }
-
-
 }
